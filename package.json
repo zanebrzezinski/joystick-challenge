@@ -1,0 +1,33 @@
+{
+  "name": "github_issues_viewer",
+  "version": "1.0.0",
+  "description": "Hello World",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/.bin/webpack"
+  },
+  "engines": {
+    "node": "4.1.1",
+    "npm": "2.1.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.6.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-react": "^6.5.0",
+    "flux": "^2.1.1",
+    "history": "1.17.x",
+    "jquery": "^1.7.4",
+    "marked": "^0.3.5",
+    "react": "0.14.6",
+    "react-addons-linked-state-mixin": "0.14.6",
+    "react-dom": "0.14.6",
+    "react-router": "^1.0.3",
+    "webpack": "^1.12.13"
+  }
+}
