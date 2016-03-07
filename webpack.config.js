@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = {
   context: __dirname,
-  entry: "./lib/frontend/hello_world.jsx",
+  entry: "./lib/frontend/joystick_challenge.jsx",
   output: {
     path: './lib/frontend/javascripts',
     filename: "bundle.js",

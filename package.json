@@ -1,7 +1,7 @@
 {
-  "name": "github_issues_viewer",
+  "name": "Joystick_Challenge",
   "version": "1.0.0",
-  "description": "Hello World",
+  "description": "Joystick Challenge",
   "main": "index.js",
   "directories": {
     "test": "test"
