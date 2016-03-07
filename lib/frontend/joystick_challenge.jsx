@@ -5,12 +5,13 @@ var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 
+var Index = require('./components/index.jsx');
 
 var App = React.createClass({
   render: function() {
     return (
       <div>
-        Hello World
+        <Index />
       </div>
     );
   }
