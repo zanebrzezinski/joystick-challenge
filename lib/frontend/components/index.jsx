@@ -3,11 +3,13 @@ var React = require('react');
 var receiptsUtil = require('../util/receiptsUtil');
 var ReceiptsStore = require('../stores/receipts_store');
 
+var Receipt = require('./receipt');
+
 var Index = React.createClass({
 
   getInitialState: function() {
     return(
-      {carts: {}}
+      {carts: []}
     );
   },
 
@@ -25,8 +27,16 @@ var Index = React.createClass({
   },
 
   render: function() {
+
+    var i = 0;
+    var receipts = this.state.carts.map(function(cart){
+      return(
+        <Receipt key={i+=1} cart={cart} />
+      );
+    });
+
     return(
-      <div></div>
+      <ul>{receipts}</ul>
     );
   }
 });
