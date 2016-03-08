@@ -36,7 +36,7 @@ var Index = React.createClass({
     });
 
     return(
-      <ul>{receipts}</ul>
+      <ul className="receipts">{receipts}</ul>
     );
   }
 });

@@ -4,6 +4,21 @@ var taxExempt = require('../util/tax_exempt');
 
 var Receipt = React.createClass({
 
+
+  calculateTax: function(price) {
+    var tax = price * 0.1;
+
+    itemArray.forEach(function(word){
+      if (taxExempt[word]) {
+        tax -= price * 0.1;
+      } else if (word === "imported") {
+        tax += price * 0.05;
+      }
+    });
+
+    return this.roundUpToNickel(tax);
+  },
+
   roundToPenny: function(price) {
     return (Math.round(price * 100)) / 100;
   },
@@ -25,36 +40,33 @@ var Receipt = React.createClass({
       itemArray = item.split(" ");
       var price = parseFloat(itemArray[itemArray.length - 1]);
       var quantity = parseInt(itemArray[0]);
-      var tax = price * 0.1;
-
-      itemArray.forEach(function(word){
-        if (taxExempt[word]) {
-          tax -= price * 0.1;
-        } else if (word === "imported") {
-          tax += price * 0.05;
-        }
-      });
-
-      tax = this.roundUpToNickel(tax);
-
+      var tax = this.calculateTax(price);
 
       total += this.roundToPenny(price + tax);
       totalTax += this.roundToPenny(tax);
 
       var itemPrice = price + tax;
-      itemPrice = ((Math.round(itemPrice * 100)) / 100).toFixed(2);
+      itemPrice = (((Math.round(itemPrice * 100)) / 100) * quantity).toFixed(2);
 
       itemArray[itemArray.length - 1] = itemPrice;
 
-      return(<li key={item}>{itemArray.join(" ")}</li>);
+      return(<li className="item" key={item}>{itemArray.join(" ")}</li>);
     }.bind(this));
 
+    var date = new Date();
+    date = date.toLocaleString();
+
     return(
-      <li>
-        <ul>
+      <li className="receipt">
+        <div className="receipt-header">
+          <div className="thanks"> *** THANK YOU FOR SHOPPING AT JOY STICK ***</div>
+          <div className="date"> {date} </div>
+          <div className="divider">-------------------------------------------</div>
+        </div>
+        <ul className="items">
         {items}
-        <li>Sales Tax: {this.roundToPenny(totalTax).toFixed(2)}</li>
-        <li>Total: {this.roundToPenny(total).toFixed(2)}</li>
+        <div className="tax">Sales Tax: {this.roundToPenny(totalTax).toFixed(2)}</div>
+        <div className="total">Total: {this.roundToPenny(total).toFixed(2)}</div>
         </ul>
       </li>
     );
