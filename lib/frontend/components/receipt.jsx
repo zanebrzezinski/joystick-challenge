@@ -68,7 +68,6 @@ var Receipt = React.createClass({
         <div className="receipt-header">
           <div className="thanks"> *** THANK YOU FOR SHOPPING AT JOY STICK ***</div>
           <div className="date"> {date} </div>
-          <div className="divider">-----------------------------------------------</div>
         </div>
         <ul className="items">
           {items}
