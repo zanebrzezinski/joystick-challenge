@@ -10,7 +10,11 @@ var Receipt = React.createClass({
 
   roundUpToNickel: function(price) {
     var arr = price.toString().split(".");
-    
+    var newPrice = price;
+    if (arr[1] && arr[1][1] && arr[1][1] !== 5) {
+      newPrice = Math.round((price + 0.025) * 20) / 20;
+    }
+    return newPrice;
   },
 
   render: function(){
@@ -31,14 +35,16 @@ var Receipt = React.createClass({
         }
       });
 
-      tax = this.roundToPenny((Math.round(tax * 20)/20));
+      tax = this.roundUpToNickel(tax);
+
 
       total += this.roundToPenny(price + tax);
       totalTax += this.roundToPenny(tax);
 
       var itemPrice = price + tax;
+      itemPrice = ((Math.round(itemPrice * 100)) / 100).toFixed(2);
 
-      itemArray[itemArray.length - 1] = (Math.round(itemPrice * 100))/100;
+      itemArray[itemArray.length - 1] = itemPrice;
 
       return(<li key={item}>{itemArray.join(" ")}</li>);
     }.bind(this));
@@ -47,8 +53,8 @@ var Receipt = React.createClass({
       <li>
         <ul>
         {items}
-        <li>Sales Tax: {this.roundToPenny(totalTax)}</li>
-        <li>Total: {this.roundToPenny(total)}</li>
+        <li>Sales Tax: {this.roundToPenny(totalTax).toFixed(2)}</li>
+        <li>Total: {this.roundToPenny(total).toFixed(2)}</li>
         </ul>
       </li>
     );
