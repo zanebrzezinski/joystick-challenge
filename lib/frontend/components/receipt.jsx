@@ -1,33 +1,54 @@
 var React = require('react');
 
+var taxExempt = require('../util/tax_exempt');
+
 var Receipt = React.createClass({
 
-  getInitialState: function() {
-    return({
-      tax: 0, total: 0
-    });
+  roundToPenny: function(price) {
+    return (Math.round(price * 100)) / 100;
   },
 
-  componentDidMount: function(){
-    this.props.cart.items.map(function(item){
-      this.calculateTax(item.split(" "));
-    }.bind(this));
+  roundUpToNickel: function(price) {
+    var arr = price.toString().split(".");
+    
   },
-
-  calculateTax: function(item) {
-    this.setState({total: this.state.total += parseFloat(item[item.length - 1])});
-  },
-
 
   render: function(){
+    var total = 0;
+    var totalTax = 0;
+
     items = this.props.cart.items.map(function(item){
-      return(<li key={item}>{item}</li>);
+      itemArray = item.split(" ");
+      var price = parseFloat(itemArray[itemArray.length - 1]);
+      var quantity = parseInt(itemArray[0]);
+      var tax = price * 0.1;
+
+      itemArray.forEach(function(word){
+        if (taxExempt[word]) {
+          tax -= price * 0.1;
+        } else if (word === "imported") {
+          tax += price * 0.05;
+        }
+      });
+
+      tax = this.roundToPenny((Math.round(tax * 20)/20));
+
+      total += this.roundToPenny(price + tax);
+      totalTax += this.roundToPenny(tax);
+
+      var itemPrice = price + tax;
+
+      itemArray[itemArray.length - 1] = (Math.round(itemPrice * 100))/100;
+
+      return(<li key={item}>{itemArray.join(" ")}</li>);
     }.bind(this));
+
     return(
       <li>
         <ul>
         {items}
-        <li>{this.state.total}</li>
+        <li>Sales Tax: {this.roundToPenny(totalTax)}</li>
+        <li>Total: {this.roundToPenny(total)}</li>
         </ul>
       </li>
     );
