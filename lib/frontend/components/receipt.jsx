@@ -49,8 +49,15 @@ var Receipt = React.createClass({
       itemPrice = (((Math.round(itemPrice * 100)) / 100) * quantity).toFixed(2);
 
       itemArray[itemArray.length - 1] = itemPrice;
+      itemArray[itemArray.length - 2] = ":";
 
-      return(<li className="item" key={item}>{itemArray.join(" ")}</li>);
+      return(
+      <li key={item}>
+        <div className="item">
+          {itemArray.splice(0, itemArray.length - 2).join(" ")}
+        </div>
+        <div className="price">{itemPrice}</div>
+      </li>);
     }.bind(this));
 
     var date = new Date();
@@ -61,10 +68,10 @@ var Receipt = React.createClass({
         <div className="receipt-header">
           <div className="thanks"> *** THANK YOU FOR SHOPPING AT JOY STICK ***</div>
           <div className="date"> {date} </div>
-          <div className="divider">-------------------------------------------</div>
+          <div className="divider">-----------------------------------------------</div>
         </div>
         <ul className="items">
-        {items}
+          {items}
         <div className="tax">Sales Tax: {this.roundToPenny(totalTax).toFixed(2)}</div>
         <div className="total">Total: {this.roundToPenny(total).toFixed(2)}</div>
         </ul>
